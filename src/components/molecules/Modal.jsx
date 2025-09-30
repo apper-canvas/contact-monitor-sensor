@@ -50,7 +50,7 @@ const Modal = ({
                   </Button>
                 </div>
               )}
-              <div className="p-6">
+<div className="p-6 max-h-[70vh] overflow-y-auto flex flex-col">
                 {children}
               </div>
             </motion.div>
