@@ -134,13 +134,13 @@ name="name_c"
           placeholder="Enter full name"
         />
 
-        <FormField
+<FormField
           label="Email"
 name="email_c"
           type="email"
-          value={formData.Email_c}
+          value={formData.email_c}
           onChange={handleChange}
-          error={errors.Email_c}
+          error={errors.email_c}
           required
           placeholder="Enter email address"
         />
