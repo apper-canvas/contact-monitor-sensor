@@ -17,8 +17,6 @@ fields: [
           {"field": {"Name": "industry_c"}},
           {"field": {"Name": "website_c"}},
           {"field": {"Name": "phone_c"}},
-          {"field": {"Name": "email_c"}},
-          {"field": {"Name": "description_c"}},
           {"field": {"Name": "address_c"}},
           {"field": {"Name": "city_c"}},
           {"field": {"Name": "state_c"}},
@@ -51,8 +49,6 @@ fields: [
           {"field": {"Name": "industry_c"}},
           {"field": {"Name": "website_c"}},
           {"field": {"Name": "phone_c"}},
-          {"field": {"Name": "email_c"}},
-          {"field": {"Name": "description_c"}},
           {"field": {"Name": "address_c"}},
           {"field": {"Name": "city_c"}},
           {"field": {"Name": "state_c"}},
@@ -76,14 +72,12 @@ fields: [
 
   async create(companyData) {
     try {
-      // Only include Updateable fields for create operation
+// Only include Updateable fields for create operation
 const updateableData = {
         name_c: companyData.name_c || "",
         industry_c: companyData.industry_c || "",
         website_c: companyData.website_c || "",
         phone_c: companyData.phone_c || "",
-        email_c: companyData.email_c || "",
-        description_c: companyData.description_c || "",
         address_c: companyData.address_c || "",
         city_c: companyData.city_c || "",
         state_c: companyData.state_c || "",
@@ -141,15 +135,13 @@ const updateableData = {
 
   async update(id, companyData) {
     try {
-      // Only include Updateable fields for update operation
+// Only include Updateable fields for update operation
 const updateableData = {
         Id: parseInt(id),
         name_c: companyData.name_c || "",
         industry_c: companyData.industry_c || "",
         website_c: companyData.website_c || "",
         phone_c: companyData.phone_c || "",
-        email_c: companyData.email_c || "",
-        description_c: companyData.description_c || "",
         address_c: companyData.address_c || "",
         city_c: companyData.city_c || "",
         state_c: companyData.state_c || "",
