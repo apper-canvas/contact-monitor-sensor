@@ -27,11 +27,11 @@ const ContactList = () => {
   }, []);
 
   useEffect(() => {
-    if (searchTerm) {
+if (searchTerm) {
       const filtered = contacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (contact.company && contact.company.toLowerCase().includes(searchTerm.toLowerCase()))
+        contact.Name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.Email_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (contact.Company_c && contact.Company_c.toLowerCase().includes(searchTerm.toLowerCase()))
       );
       setFilteredContacts(filtered);
     } else {
@@ -123,16 +123,16 @@ const ContactList = () => {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
-                    <Avatar 
-                      fallback={contact.name}
+<Avatar 
+                      fallback={contact.Name_c}
                       size="md"
                     />
                     <div>
                       <h3 className="font-semibold text-secondary-900 group-hover:text-primary-600 transition-colors">
-                        {contact.name}
+                        {contact.Name_c}
                       </h3>
-                      {contact.company && (
-                        <p className="text-sm text-secondary-500">{contact.company}</p>
+                      {contact.Company_c && (
+                        <p className="text-sm text-secondary-500">{contact.Company_c}</p>
                       )}
                     </div>
                   </div>
@@ -156,25 +156,25 @@ const ContactList = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <div className="flex items-center text-sm text-secondary-600">
+<div className="flex items-center text-sm text-secondary-600">
                     <ApperIcon name="Mail" className="w-4 h-4 mr-2 text-secondary-400" />
-                    <span className="truncate">{contact.email}</span>
+                    <span className="truncate">{contact.Email_c}</span>
                   </div>
                   <div className="flex items-center text-sm text-secondary-600">
                     <ApperIcon name="Phone" className="w-4 h-4 mr-2 text-secondary-400" />
-                    <span>{contact.phone}</span>
+                    <span>{contact.Phone_c}</span>
                   </div>
-                  {contact.notes && (
+                  {contact.Notes_c && (
                     <div className="flex items-start text-sm text-secondary-600 mt-3">
                       <ApperIcon name="FileText" className="w-4 h-4 mr-2 text-secondary-400 mt-0.5" />
-                      <span className="line-clamp-2">{contact.notes}</span>
+                      <span className="line-clamp-2">{contact.Notes_c}</span>
                     </div>
                   )}
                 </div>
 
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-100">
                   <Badge variant="default" size="sm">
-                    Added {format(new Date(contact.createdAt), "MMM dd")}
+                    Added {format(new Date(contact.CreatedDate), "MMM dd")}
                   </Badge>
                   <div className="flex items-center space-x-2">
                     <button className="text-secondary-400 hover:text-primary-500 transition-colors">

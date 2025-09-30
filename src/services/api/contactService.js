@@ -1,67 +1,201 @@
-import contactsData from "@/services/mockData/contacts.json";
-
-let contacts = [...contactsData];
-
 const contactService = {
   getAll: async () => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return [...contacts];
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const params = {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "Name_c"}},
+          {"field": {"Name": "Email_c"}},
+          {"field": {"Name": "Phone_c"}},
+          {"field": {"Name": "Company_c"}},
+          {"field": {"Name": "Notes_c"}},
+          {"field": {"Name": "CreatedDate"}}
+        ],
+        orderBy: [{"fieldName": "CreatedDate", "sorttype": "DESC"}],
+        pagingInfo: {"limit": 100, "offset": 0}
+      };
+
+      const response = await apperClient.fetchRecords('contact_c', params);
+
+      if (!response.success) {
+        console.error("Error fetching contacts:", response.message);
+        throw new Error(response.message);
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching contacts:", error?.response?.data?.message || error.message);
+      throw error;
+    }
   },
 
   getById: async (id) => {
-    await new Promise(resolve => setTimeout(resolve, 200));
-    const contact = contacts.find(c => c.Id === parseInt(id));
-    if (!contact) {
-      throw new Error("Contact not found");
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const params = {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "Name_c"}},
+          {"field": {"Name": "Email_c"}},
+          {"field": {"Name": "Phone_c"}},
+          {"field": {"Name": "Company_c"}},
+          {"field": {"Name": "Notes_c"}},
+          {"field": {"Name": "CreatedDate"}}
+        ]
+      };
+
+      const response = await apperClient.getRecordById('contact_c', parseInt(id), params);
+
+      if (!response.success) {
+        console.error("Error fetching contact:", response.message);
+        throw new Error(response.message);
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching contact:", error?.response?.data?.message || error.message);
+      throw error;
     }
-    return { ...contact };
   },
 
-create: async (contactData) => {
-    await new Promise(resolve => setTimeout(resolve, 400));
-    
-    const maxId = contacts.reduce((max, contact) => 
-      contact.Id > max ? contact.Id : max, 0
-    );
-    
-    const newContact = {
-      Id: maxId + 1,
-      ...contactData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    
-    contacts.push(newContact);
-    return { ...newContact };
+  create: async (contactData) => {
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      // Only include Updateable fields
+      const params = {
+        records: [{
+          Name_c: contactData.Name_c,
+          Email_c: contactData.Email_c,
+          Phone_c: contactData.Phone_c,
+          Company_c: contactData.Company_c,
+          Notes_c: contactData.Notes_c
+        }]
+      };
+
+      const response = await apperClient.createRecord('contact_c', params);
+
+      if (!response.success) {
+        console.error("Error creating contact:", response.message);
+        throw new Error(response.message);
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.error(`Failed to create ${failed.length} contacts:`, JSON.stringify(failed));
+          throw new Error(failed[0].message || "Failed to create contact");
+        }
+
+        return successful[0].data;
+      }
+
+      throw new Error("No results returned from create operation");
+    } catch (error) {
+      console.error("Error creating contact:", error?.response?.data?.message || error.message);
+      throw error;
+    }
   },
 
   update: async (id, contactData) => {
-    await new Promise(resolve => setTimeout(resolve, 400));
-    
-    const index = contacts.findIndex(c => c.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Contact not found");
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      // Only include Updateable fields
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          Name_c: contactData.Name_c,
+          Email_c: contactData.Email_c,
+          Phone_c: contactData.Phone_c,
+          Company_c: contactData.Company_c,
+          Notes_c: contactData.Notes_c
+        }]
+      };
+
+      const response = await apperClient.updateRecord('contact_c', params);
+
+      if (!response.success) {
+        console.error("Error updating contact:", response.message);
+        throw new Error(response.message);
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.error(`Failed to update ${failed.length} contacts:`, JSON.stringify(failed));
+          throw new Error(failed[0].message || "Failed to update contact");
+        }
+
+        return successful[0].data;
+      }
+
+      throw new Error("No results returned from update operation");
+    } catch (error) {
+      console.error("Error updating contact:", error?.response?.data?.message || error.message);
+      throw error;
     }
-    
-    contacts[index] = {
-      ...contacts[index],
-      ...contactData,
-      updatedAt: new Date().toISOString()
-    };
-    
-    return { ...contacts[index] };
   },
 
   delete: async (id) => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
-    const index = contacts.findIndex(c => c.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Contact not found");
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const params = {
+        RecordIds: [parseInt(id)]
+      };
+
+      const response = await apperClient.deleteRecord('contact_c', params);
+
+      if (!response.success) {
+        console.error("Error deleting contact:", response.message);
+        throw new Error(response.message);
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.error(`Failed to delete ${failed.length} contacts:`, JSON.stringify(failed));
+          throw new Error(failed[0].message || "Failed to delete contact");
+        }
+
+        return successful.length > 0;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error deleting contact:", error?.response?.data?.message || error.message);
+      throw error;
     }
-    
-    const deleted = contacts.splice(index, 1)[0];
-    return { ...deleted };
   }
 };
 

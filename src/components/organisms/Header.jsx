@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { cn } from "@/utils/cn";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
+import { AuthContext } from "@/App";
 
+const LogoutButton = () => {
+  const { logout } = useContext(AuthContext);
+  
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={logout}
+      className="flex items-center space-x-2 text-secondary-600 hover:text-secondary-900"
+    >
+      <ApperIcon name="LogOut" className="w-4 h-4" />
+      <span className="hidden sm:inline">Logout</span>
+    </Button>
+  );
+};
 const Header = ({ title, onMenuClick, className, children }) => {
   return (
     <header className={cn(
@@ -23,8 +39,9 @@ const Header = ({ title, onMenuClick, className, children }) => {
             <h1 className="text-xl font-bold text-secondary-900">{title}</h1>
           )}
         </div>
-        <div className="flex items-center space-x-4">
+<div className="flex items-center space-x-4">
           {children}
+          <LogoutButton />
         </div>
       </div>
     </header>

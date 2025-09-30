@@ -51,22 +51,22 @@ const DealPipeline = () => {
     }
   };
 
-  const getContactName = (contactId) => {
+const getContactName = (contactId) => {
     const contact = contacts.find(c => c.Id === contactId);
-    return contact ? contact.name : "Unknown Contact";
+    return contact ? contact.Name_c : "Unknown Contact";
   };
 
   const getContactCompany = (contactId) => {
     const contact = contacts.find(c => c.Id === contactId);
-    return contact ? contact.company : "";
+    return contact ? contact.Company_c : "";
   };
 
-  const getDealsByStage = (stage) => {
-    return deals.filter(deal => deal.stage === stage);
+const getDealsByStage = (stage) => {
+    return deals.filter(deal => deal.Stage_c === stage);
   };
 
   const getTotalValueByStage = (stage) => {
-    return getDealsByStage(stage).reduce((total, deal) => total + deal.value, 0);
+    return getDealsByStage(stage).reduce((total, deal) => total + deal.Value_c, 0);
   };
 
   const formatCurrency = (amount) => {
@@ -193,9 +193,9 @@ const DealPipeline = () => {
                           layout
                           className="p-4 bg-secondary-50 rounded-lg border border-secondary-200 hover:border-secondary-300 transition-all group"
                         >
-                          <div className="flex items-start justify-between mb-2">
+<div className="flex items-start justify-between mb-2">
                             <h4 className="font-medium text-secondary-900 group-hover:text-primary-600 transition-colors line-clamp-1">
-                              {deal.title}
+                              {deal.Title_c}
                             </h4>
                             <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Button
@@ -218,24 +218,24 @@ const DealPipeline = () => {
                           </div>
                           
                           <div className="space-y-1 text-sm text-secondary-600">
-                            <p className="font-medium">{getContactName(deal.contactId)}</p>
-                            {getContactCompany(deal.contactId) && (
-                              <p className="text-xs">{getContactCompany(deal.contactId)}</p>
+                            <p className="font-medium">{getContactName(deal.ContactId_c)}</p>
+                            {getContactCompany(deal.ContactId_c) && (
+                              <p className="text-xs">{getContactCompany(deal.ContactId_c)}</p>
                             )}
                           </div>
                           
                           <div className="flex items-center justify-between mt-3">
                             <span className="font-semibold text-accent-600">
-                              {formatCurrency(deal.value)}
+                              {formatCurrency(deal.Value_c)}
                             </span>
-                            <Badge variant={getStageVariant(deal.stage)} size="sm">
-                              {deal.probability}%
+                            <Badge variant={getStageVariant(deal.Stage_c)} size="sm">
+                              {deal.Probability_c}%
                             </Badge>
                           </div>
                           
                           <div className="flex items-center text-xs text-secondary-500 mt-2">
                             <ApperIcon name="Calendar" className="w-3 h-3 mr-1" />
-                            Close: {format(new Date(deal.expectedCloseDate), "MMM dd")}
+                            Close: {format(new Date(deal.ExpectedCloseDate_c), "MMM dd")}
                           </div>
                         </motion.div>
                       ))

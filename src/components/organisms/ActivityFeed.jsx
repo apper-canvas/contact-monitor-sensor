@@ -41,16 +41,16 @@ const ActivityFeed = () => {
     }
   };
 
-  const getContactName = (contactId) => {
+const getContactName = (contactId) => {
     if (!contactId) return "Unknown Contact";
     const contact = contacts.find(c => c.Id === contactId);
-    return contact ? contact.name : "Unknown Contact";
+    return contact ? contact.Name_c : "Unknown Contact";
   };
 
   const getDealTitle = (dealId) => {
     if (!dealId) return null;
     const deal = deals.find(d => d.Id === dealId);
-    return deal ? deal.title : "Unknown Deal";
+    return deal ? deal.Title_c : "Unknown Deal";
   };
 
   const getActivityIcon = (type) => {
@@ -96,8 +96,8 @@ const ActivityFeed = () => {
     return format(new Date(date), "h:mm a");
   };
 
-  const groupedActivities = activities.reduce((groups, activity) => {
-    const dateKey = formatDate(activity.timestamp);
+const groupedActivities = activities.reduce((groups, activity) => {
+    const dateKey = formatDate(activity.Timestamp_c);
     if (!groups[dateKey]) {
       groups[dateKey] = [];
     }
@@ -118,11 +118,11 @@ const ActivityFeed = () => {
 
       {/* Activity Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
+{[
           { label: "Total Activities", value: activities.length, icon: "Activity" },
-          { label: "Calls", value: activities.filter(a => a.type === "call").length, icon: "Phone" },
-          { label: "Emails", value: activities.filter(a => a.type === "email").length, icon: "Mail" },
-          { label: "Meetings", value: activities.filter(a => a.type === "meeting").length, icon: "Calendar" },
+          { label: "Calls", value: activities.filter(a => a.Type_c === "call").length, icon: "Phone" },
+          { label: "Emails", value: activities.filter(a => a.Type_c === "email").length, icon: "Mail" },
+          { label: "Meetings", value: activities.filter(a => a.Type_c === "meeting").length, icon: "Calendar" },
         ].map((stat) => (
           <Card key={stat.label}>
             <CardContent className="p-4 text-center">
@@ -153,14 +153,14 @@ const ActivityFeed = () => {
               </h3>
               <div className="space-y-4">
                 {dayActivities
-                  .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+.sort((a, b) => new Date(b.Timestamp_c) - new Date(a.Timestamp_c))
                   .map((activity) => (
                     <Card key={activity.Id} className="hover:shadow-md transition-shadow">
                       <CardContent className="p-4">
                         <div className="flex items-start space-x-4">
-                          <div className={`p-2 rounded-full bg-secondary-100 ${getActivityColor(activity.type)}`}>
+                          <div className={`p-2 rounded-full bg-secondary-100 ${getActivityColor(activity.Type_c)}`}>
                             <ApperIcon 
-                              name={getActivityIcon(activity.type)} 
+                              name={getActivityIcon(activity.Type_c)} 
                               className="w-4 h-4" 
                             />
                           </div>
@@ -169,33 +169,33 @@ const ActivityFeed = () => {
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
                                 <p className="text-sm font-medium text-secondary-900">
-                                  {activity.description}
+                                  {activity.Description_c}
                                 </p>
                                 <div className="flex items-center space-x-4 mt-1">
                                   <span className="text-sm text-secondary-600">
-                                    {getContactName(activity.contactId)}
+                                    {getContactName(activity.ContactId_c)}
                                   </span>
-                                  {activity.dealId && (
+                                  {activity.DealId_c && (
                                     <Badge variant="secondary" size="sm">
-                                      {getDealTitle(activity.dealId)}
+                                      {getDealTitle(activity.DealId_c)}
                                     </Badge>
                                   )}
                                 </div>
                               </div>
                               <div className="text-right">
                                 <p className="text-sm text-secondary-500">
-                                  {formatTime(activity.timestamp)}
+                                  {formatTime(activity.Timestamp_c)}
                                 </p>
                                 <Badge 
                                   variant={
-                                    activity.type === "deal_created" || activity.type === "contact_created" 
+                                    activity.Type_c === "deal_created" || activity.Type_c === "contact_created" 
                                       ? "success" 
                                       : "default"
                                   } 
                                   size="sm" 
                                   className="mt-1"
                                 >
-                                  {activity.type.replace("_", " ")}
+                                  {activity.Type_c.replace("_", " ")}
                                 </Badge>
                               </div>
                             </div>

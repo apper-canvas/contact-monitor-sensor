@@ -8,13 +8,13 @@ import dealService from "@/services/api/dealService";
 import contactService from "@/services/api/contactService";
 
 const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    contactId: "",
-    value: "",
-    stage: "lead",
-    probability: "10",
-    expectedCloseDate: "",
+const [formData, setFormData] = useState({
+    Title_c: "",
+    ContactId_c: "",
+    Value_c: "",
+    Stage_c: "lead",
+    Probability_c: "10",
+    ExpectedCloseDate_c: "",
   });
   const [contacts, setContacts] = useState([]);
   const [errors, setErrors] = useState({});
@@ -37,24 +37,24 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
   }, [isOpen]);
 
   useEffect(() => {
-    if (deal) {
-      const expectedDate = deal.expectedCloseDate ? format(new Date(deal.expectedCloseDate), "yyyy-MM-dd") : "";
+if (deal) {
+      const expectedDate = deal.ExpectedCloseDate_c ? format(new Date(deal.ExpectedCloseDate_c), "yyyy-MM-dd") : "";
       setFormData({
-        title: deal.title || "",
-        contactId: deal.contactId || "",
-        value: deal.value?.toString() || "",
-        stage: deal.stage || "lead",
-        probability: deal.probability?.toString() || "10",
-        expectedCloseDate: expectedDate,
+        Title_c: deal.Title_c || "",
+        ContactId_c: deal.ContactId_c || "",
+        Value_c: deal.Value_c?.toString() || "",
+        Stage_c: deal.Stage_c || "lead",
+        Probability_c: deal.Probability_c?.toString() || "10",
+        ExpectedCloseDate_c: expectedDate,
       });
     } else {
       setFormData({
-        title: "",
-        contactId: "",
-        value: "",
-        stage: "lead",
-        probability: "10",
-        expectedCloseDate: "",
+        Title_c: "",
+        ContactId_c: "",
+        Value_c: "",
+        Stage_c: "lead",
+        Probability_c: "10",
+        ExpectedCloseDate_c: "",
       });
     }
     setErrors({});
@@ -72,23 +72,23 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
     }
   };
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.title.trim()) {
-      newErrors.title = "Title is required";
+    if (!formData.Title_c.trim()) {
+      newErrors.Title_c = "Title is required";
     }
 
-    if (!formData.contactId) {
-      newErrors.contactId = "Contact is required";
+    if (!formData.ContactId_c) {
+      newErrors.ContactId_c = "Contact is required";
     }
 
-    if (!formData.value || isNaN(formData.value) || parseFloat(formData.value) <= 0) {
-      newErrors.value = "Valid deal value is required";
+    if (!formData.Value_c || isNaN(formData.Value_c) || parseFloat(formData.Value_c) <= 0) {
+      newErrors.Value_c = "Valid deal value is required";
     }
 
-    if (!formData.expectedCloseDate) {
-      newErrors.expectedCloseDate = "Expected close date is required";
+    if (!formData.ExpectedCloseDate_c) {
+      newErrors.ExpectedCloseDate_c = "Expected close date is required";
     }
 
     setErrors(newErrors);
@@ -102,11 +102,13 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
 
     setIsSubmitting(true);
     try {
-      const dealData = {
-        ...formData,
-        value: parseFloat(formData.value),
-        probability: parseInt(formData.probability),
-        expectedCloseDate: new Date(formData.expectedCloseDate),
+const dealData = {
+        Title_c: formData.Title_c,
+        ContactId_c: parseInt(formData.ContactId_c),
+        Value_c: parseFloat(formData.Value_c),
+        Stage_c: formData.Stage_c,
+        Probability_c: parseInt(formData.Probability_c),
+        ExpectedCloseDate_c: formData.ExpectedCloseDate_c,
       };
 
       if (deal) {
@@ -130,11 +132,11 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Auto-update probability when stage changes
-    if (name === "stage") {
+// Auto-update probability when stage changes
+    if (name === "Stage_c") {
       const selectedStage = stages.find(s => s.value === value);
       if (selectedStage) {
-        setFormData(prev => ({ ...prev, probability: selectedStage.probability.toString() }));
+        setFormData(prev => ({ ...prev, Probability_c: selectedStage.probability.toString() }));
       }
     }
     
@@ -151,24 +153,24 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
       size="md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <FormField
+<FormField
           label="Deal Title"
-          name="title"
-          value={formData.title}
+          name="Title_c"
+          value={formData.Title_c}
           onChange={handleChange}
-          error={errors.title}
+          error={errors.Title_c}
           required
           placeholder="Enter deal title"
         />
 
         <FormField
           label="Contact"
-          error={errors.contactId}
+          error={errors.ContactId_c}
           required
         >
           <select
-            name="contactId"
-            value={formData.contactId}
+            name="ContactId_c"
+            value={formData.ContactId_c}
             onChange={handleChange}
             className="flex h-10 w-full rounded-lg border border-secondary-300 bg-white px-3 py-2 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
             disabled={loadingContacts}
@@ -176,7 +178,7 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
             <option value="">Select a contact</option>
             {contacts.map(contact => (
               <option key={contact.Id} value={contact.Id}>
-                {contact.name} - {contact.company}
+                {contact.Name_c} - {contact.Company_c}
               </option>
             ))}
           </select>
@@ -184,11 +186,11 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
 
         <FormField
           label="Deal Value ($)"
-          name="value"
+          name="Value_c"
           type="number"
-          value={formData.value}
+          value={formData.Value_c}
           onChange={handleChange}
-          error={errors.value}
+          error={errors.Value_c}
           required
           placeholder="0.00"
           min="0"
@@ -197,12 +199,12 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
 
         <FormField
           label="Stage"
-          error={errors.stage}
+          error={errors.Stage_c}
           required
         >
           <select
-            name="stage"
-            value={formData.stage}
+            name="Stage_c"
+            value={formData.Stage_c}
             onChange={handleChange}
             className="flex h-10 w-full rounded-lg border border-secondary-300 bg-white px-3 py-2 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
@@ -216,22 +218,22 @@ const DealForm = ({ isOpen, onClose, deal, onSuccess }) => {
 
         <FormField
           label="Probability (%)"
-          name="probability"
+          name="Probability_c"
           type="number"
-          value={formData.probability}
+          value={formData.Probability_c}
           onChange={handleChange}
-          error={errors.probability}
+          error={errors.Probability_c}
           min="0"
           max="100"
         />
 
         <FormField
           label="Expected Close Date"
-          name="expectedCloseDate"
+          name="ExpectedCloseDate_c"
           type="date"
-          value={formData.expectedCloseDate}
+          value={formData.ExpectedCloseDate_c}
           onChange={handleChange}
-          error={errors.expectedCloseDate}
+          error={errors.ExpectedCloseDate_c}
           required
         />
 

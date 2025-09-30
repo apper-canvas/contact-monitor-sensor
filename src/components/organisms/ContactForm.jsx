@@ -6,24 +6,24 @@ import Modal from "@/components/molecules/Modal";
 import contactService from "@/services/api/contactService";
 
 const ContactForm = ({ isOpen, onClose, contact, onSuccess }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    notes: "",
+const [formData, setFormData] = useState({
+    Name_c: "",
+    Email_c: "",
+    Phone_c: "",
+    Company_c: "",
+    Notes_c: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (contact) {
-      setFormData({
-        name: contact.name || "",
-        email: contact.email || "",
-        phone: contact.phone || "",
-        company: contact.company || "",
-        notes: contact.notes || "",
+setFormData({
+        Name_c: contact.Name_c || "",
+        Email_c: contact.Email_c || "",
+        Phone_c: contact.Phone_c || "",
+        Company_c: contact.Company_c || "",
+        Notes_c: contact.Notes_c || "",
       });
     } else {
       setFormData({
@@ -40,18 +40,18 @@ const ContactForm = ({ isOpen, onClose, contact, onSuccess }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+if (!formData.Name_c.trim()) {
+      newErrors.Name_c = "Name is required";
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+    if (!formData.Email_c.trim()) {
+      newErrors.Email_c = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.Email_c)) {
+      newErrors.Email_c = "Email is invalid";
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone is required";
+    if (!formData.Phone_c.trim()) {
+      newErrors.Phone_c = "Phone is required";
     }
 
     setErrors(newErrors);
@@ -126,55 +126,55 @@ const handleSubmit = async (e) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <FormField
           label="Name"
-          name="name"
-          value={formData.name}
+name="Name_c"
+          value={formData.Name_c}
           onChange={handleChange}
-          error={errors.name}
+          error={errors.Name_c}
           required
           placeholder="Enter full name"
         />
 
         <FormField
           label="Email"
-          name="email"
+          name="Email_c"
           type="email"
-          value={formData.email}
+          value={formData.Email_c}
           onChange={handleChange}
-          error={errors.email}
+          error={errors.Email_c}
           required
           placeholder="Enter email address"
         />
 
         <FormField
           label="Phone"
-          name="phone"
-          value={formData.phone}
+          name="Phone_c"
+          value={formData.Phone_c}
           onChange={handleChange}
-          error={errors.phone}
+          error={errors.Phone_c}
           required
           placeholder="Enter phone number"
         />
 
         <FormField
           label="Company"
-          name="company"
-          value={formData.company}
+          name="Company_c"
+          value={formData.Company_c}
           onChange={handleChange}
-          error={errors.company}
+          error={errors.Company_c}
           placeholder="Enter company name"
         />
 
         <FormField
           label="Notes"
-          name="notes"
-          value={formData.notes}
+          name="Notes_c"
+          value={formData.Notes_c}
           onChange={handleChange}
-          error={errors.notes}
+          error={errors.Notes_c}
           placeholder="Additional notes..."
         >
           <textarea
-            name="notes"
-            value={formData.notes}
+            name="Notes_c"
+            value={formData.Notes_c}
             onChange={handleChange}
             className="flex min-h-[80px] w-full rounded-lg border border-secondary-300 bg-white px-3 py-2 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 resize-none"
             placeholder="Additional notes..."
