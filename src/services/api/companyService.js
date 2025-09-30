@@ -12,15 +12,15 @@ export const companyService = {
     try {
       const params = {
         fields: [
-          {"field": {"Name": "Id"}},
-          {"field": {"Name": "Name"}},
-          {"field": {"Name": "Industry"}},
-          {"field": {"Name": "Website"}},
-          {"field": {"Name": "Phone"}},
-          {"field": {"Name": "Email"}},
-          {"field": {"Name": "Description"}},
-          {"field": {"Name": "CreatedDate"}},
-          {"field": {"Name": "ModifiedDate"}}
+{"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "industry_c"}},
+          {"field": {"Name": "website_c"}},
+          {"field": {"Name": "phone_c"}},
+          {"field": {"Name": "address_c"}},
+          {"field": {"Name": "city_c"}},
+          {"field": {"Name": "state_c"}},
+          {"field": {"Name": "zip_code_c"}}
         ],
         orderBy: [{"fieldName": "Name", "sorttype": "ASC"}],
         pagingInfo: {"limit": 100, "offset": 0}
@@ -45,14 +45,14 @@ export const companyService = {
       const params = {
         fields: [
           {"field": {"Name": "Id"}},
-          {"field": {"Name": "Name"}},
-          {"field": {"Name": "Industry"}},
-          {"field": {"Name": "Website"}},
-          {"field": {"Name": "Phone"}},
-          {"field": {"Name": "Email"}},
-          {"field": {"Name": "Description"}},
-          {"field": {"Name": "CreatedDate"}},
-          {"field": {"Name": "ModifiedDate"}}
+{"field": {"Name": "name_c"}},
+          {"field": {"Name": "industry_c"}},
+          {"field": {"Name": "website_c"}},
+          {"field": {"Name": "phone_c"}},
+          {"field": {"Name": "address_c"}},
+          {"field": {"Name": "city_c"}},
+          {"field": {"Name": "state_c"}},
+          {"field": {"Name": "zip_code_c"}}
         ]
       };
 
@@ -73,19 +73,24 @@ export const companyService = {
   async create(companyData) {
     try {
       // Only include Updateable fields for create operation
-      const updateableData = {
-        Name: companyData.Name,
-        Industry: companyData.Industry || "",
-        Website: companyData.Website || "",
-        Phone: companyData.Phone || "",
-        Email: companyData.Email || "",
-        Description: companyData.Description || ""
+const updateableData = {
+        name_c: companyData.name_c || "",
+        industry_c: companyData.industry_c || "",
+        website_c: companyData.website_c || "",
+        phone_c: companyData.phone_c || "",
+        address_c: companyData.address_c || "",
+        city_c: companyData.city_c || "",
+        state_c: companyData.state_c || "",
+        zip_code_c: companyData.zip_code_c || ""
       };
 
-      // Remove empty string fields to avoid sending unnecessary data
+      // Remove empty string fields except for name_c which is required
       const cleanData = {};
       Object.keys(updateableData).forEach(key => {
-        if (updateableData[key] && updateableData[key].trim() !== '') {
+        if (key === 'name_c') {
+          // Always include name_c even if empty (required field)
+          cleanData[key] = updateableData[key];
+        } else if (updateableData[key] && updateableData[key].trim() !== '') {
           cleanData[key] = updateableData[key];
         }
       });
@@ -134,19 +139,24 @@ export const companyService = {
       // Only include Updateable fields for update operation
       const updateableData = {
         Id: parseInt(id),
-        Name: companyData.Name,
-        Industry: companyData.Industry || "",
-        Website: companyData.Website || "",
-        Phone: companyData.Phone || "",
-        Email: companyData.Email || "",
-        Description: companyData.Description || ""
+name_c: companyData.name_c || "",
+        industry_c: companyData.industry_c || "",
+        website_c: companyData.website_c || "",
+        phone_c: companyData.phone_c || "",
+        address_c: companyData.address_c || "",
+        city_c: companyData.city_c || "",
+        state_c: companyData.state_c || "",
+        zip_code_c: companyData.zip_code_c || ""
       };
 
-      // Remove empty string fields except for Name which is required
+      // Remove empty string fields except for name_c which is required
       const cleanData = { Id: parseInt(id) };
       Object.keys(updateableData).forEach(key => {
         if (key === 'Id') return; // Already added
-        if (key === 'Name' || (updateableData[key] && updateableData[key].trim() !== '')) {
+        if (key === 'name_c') {
+          // Always include name_c even if empty (required field)
+          cleanData[key] = updateableData[key];
+        } else if (updateableData[key] && updateableData[key].trim() !== '') {
           cleanData[key] = updateableData[key];
         }
       });
