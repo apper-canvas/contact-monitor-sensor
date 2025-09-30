@@ -22,13 +22,13 @@ const Companies = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    Name: "",
-    Industry: "",
-    Website: "",
-    Phone: "",
-    Email: "",
-    Description: ""
+const [formData, setFormData] = useState({
+    name_c: "",
+    industry_c: "",
+    website_c: "",
+    phone_c: "",
+    email_c: "",
+    description_c: ""
   });
 
   useEffect(() => {
@@ -55,19 +55,19 @@ const Companies = () => {
   };
 
   const filteredCompanies = companies.filter((company) =>
-    company.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    company.Industry?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    company.Email?.toLowerCase().includes(searchTerm.toLowerCase())
+company.name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    company.industry_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    company.email_c?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleCreate = () => {
     setFormData({
-      Name: "",
-      Industry: "",
-      Website: "",
-      Phone: "",
-      Email: "",
-      Description: ""
+name_c: "",
+      industry_c: "",
+      website_c: "",
+      phone_c: "",
+      email_c: "",
+      description_c: ""
     });
     setIsCreateModalOpen(true);
   };
@@ -75,12 +75,12 @@ const Companies = () => {
   const handleEdit = (company) => {
     setSelectedCompany(company);
     setFormData({
-      Name: company.Name || "",
-      Industry: company.Industry || "",
-      Website: company.Website || "",
-      Phone: company.Phone || "",
-      Email: company.Email || "",
-      Description: company.Description || ""
+name_c: company.name_c || "",
+      industry_c: company.industry_c || "",
+      website_c: company.website_c || "",
+      phone_c: company.phone_c || "",
+      email_c: company.email_c || "",
+      description_c: company.description_c || ""
     });
     setIsEditModalOpen(true);
   };
@@ -113,12 +113,12 @@ const Companies = () => {
       
       await loadCompanies();
       setFormData({
-        Name: "",
-        Industry: "",
-        Website: "",
-        Phone: "",
-        Email: "",
-        Description: ""
+name_c: "",
+        industry_c: "",
+        website_c: "",
+        phone_c: "",
+        email_c: "",
+        description_c: ""
       });
     } catch (err) {
       console.error("Error saving company:", err?.response?.data?.message || err);
@@ -151,36 +151,36 @@ const Companies = () => {
       
       <FormField
         label="Industry"
-        value={formData.Industry}
-        onChange={(value) => handleFormChange("Industry", value)}
+value={formData.industry_c}
+        onChange={(value) => handleFormChange("industry_c", value)}
         placeholder="Enter industry"
       />
       
       <FormField
         label="Website"
-        value={formData.Website}
-        onChange={(value) => handleFormChange("Website", value)}
+value={formData.website_c}
+        onChange={(value) => handleFormChange("website_c", value)}
         placeholder="https://example.com"
       />
       
       <FormField
         label="Phone"
-        value={formData.Phone}
-        onChange={(value) => handleFormChange("Phone", value)}
+value={formData.phone_c}
+        onChange={(value) => handleFormChange("phone_c", value)}
         placeholder="Enter phone number"
       />
       
       <FormField
         label="Email"
-        value={formData.Email}
-        onChange={(value) => handleFormChange("Email", value)}
+value={formData.email_c}
+        onChange={(value) => handleFormChange("email_c", value)}
         placeholder="contact@company.com"
       />
       
       <FormField
         label="Description"
-        value={formData.Description}
-        onChange={(value) => handleFormChange("Description", value)}
+value={formData.description_c}
+        onChange={(value) => handleFormChange("description_c", value)}
         placeholder="Company description"
         multiline
       />
@@ -272,8 +272,8 @@ const Companies = () => {
                       <h3 className="font-semibold text-lg text-gray-900">
                         {company.Name}
                       </h3>
-                      <p className="text-sm text-gray-500">
-                        {company.Industry || "Industry not specified"}
+<p className="text-sm text-gray-500">
+                        {company.industry_c || "Industry not specified"}
                       </p>
                     </div>
                   </div>
@@ -303,7 +303,7 @@ const Companies = () => {
                 </div>
 
                 <div className="space-y-2">
-                  {company.Website && (
+{company.website_c && (
                     <div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Globe" size={14} className="mr-2" />
                       <a 
@@ -316,7 +316,7 @@ const Companies = () => {
                       </a>
                     </div>
                   )}
-                  {company.Email && (
+{company.email_c && (
                     <div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Mail" size={14} className="mr-2" />
                       <a href={`mailto:${company.Email}`} className="hover:text-blue-600">
@@ -325,7 +325,7 @@ const Companies = () => {
                     </div>
                   )}
                   {company.Phone && (
-                    <div className="flex items-center text-sm text-gray-600">
+<div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Phone" size={14} className="mr-2" />
                       <a href={`tel:${company.Phone}`} className="hover:text-blue-600">
                         {company.Phone}
@@ -334,7 +334,7 @@ const Companies = () => {
                   )}
                 </div>
 
-                {company.Description && (
+{company.description_c && (
                   <p className="text-sm text-gray-600 mt-3 line-clamp-2">
                     {company.Description}
                   </p>
