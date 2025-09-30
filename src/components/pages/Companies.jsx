@@ -144,8 +144,8 @@ name_c: "",
       <FormField
         label="Company Name"
         required
-value={formData.Name}
-        onChange={(value) => handleFormChange("Name", value)}
+value={formData.name_c}
+        onChange={(value) => handleFormChange("name_c", value)}
         placeholder="Enter company name"
         required
       />
@@ -271,7 +271,7 @@ value={formData.description_c}
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg text-gray-900">
-                        {company.Name}
+{company.name_c}
                       </h3>
 <p className="text-sm text-gray-500">
                         {company.industry_c || "Industry not specified"}
@@ -308,28 +308,28 @@ value={formData.description_c}
                     <div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Globe" size={14} className="mr-2" />
                       <a 
-                        href={company.Website} 
+href={company.website_c} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="hover:text-blue-600"
                       >
-                        {company.Website}
+                        {company.website_c}
                       </a>
                     </div>
                   )}
 {company.email_c && (
                     <div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Mail" size={14} className="mr-2" />
-                      <a href={`mailto:${company.Email}`} className="hover:text-blue-600">
-                        {company.Email}
+<a href={`mailto:${company.email_c}`} className="hover:text-blue-600">
+                        {company.email_c}
                       </a>
                     </div>
                   )}
-                  {company.Phone && (
+{company.phone_c && (
 <div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Phone" size={14} className="mr-2" />
-                      <a href={`tel:${company.Phone}`} className="hover:text-blue-600">
-                        {company.Phone}
+<a href={`tel:${company.phone_c}`} className="hover:text-blue-600">
+                        {company.phone_c}
                       </a>
                     </div>
                   )}
@@ -337,7 +337,7 @@ value={formData.description_c}
 
 {company.description_c && (
                   <p className="text-sm text-gray-600 mt-3 line-clamp-2">
-                    {company.Description}
+{company.description_c}
                   </p>
                 )}
               </Card>
@@ -377,8 +377,8 @@ value={formData.description_c}
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             Delete Company
           </h3>
-          <p className="text-sm text-gray-500 mb-6">
-            Are you sure you want to delete "{selectedCompany?.Name}"? This action cannot be undone.
+<p className="text-sm text-gray-500 mb-6">
+            Are you sure you want to delete "{selectedCompany?.name_c}"? This action cannot be undone.
           </p>
           <div className="flex justify-center space-x-3">
             <Button
