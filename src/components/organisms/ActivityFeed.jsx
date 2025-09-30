@@ -220,7 +220,7 @@ const dateKey = formatDate(activity.Timestamp_c);
                                   size="sm" 
                                   className="mt-1"
                                 >
-                                  {activity.Type_c.replace("_", " ")}
+{activity.Type_c?.replace("_", " ") ?? "Unknown"}
                                 </Badge>
                               </div>
                             </div>
