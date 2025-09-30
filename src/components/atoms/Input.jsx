@@ -19,9 +19,9 @@ value,
         error && "border-error-500 focus:ring-error-500",
         className
       )}
-      onChange={(e) => {
+onChange={(e) => {
         if (onChange) {
-          onChange(e.target.value);
+          onChange(e);
         }
       }}
       ref={ref}
