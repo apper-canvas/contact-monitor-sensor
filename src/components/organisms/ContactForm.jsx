@@ -26,12 +26,12 @@ setFormData({
         notes_c: contact.notes_c || "",
       });
     } else {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        notes: "",
+setFormData({
+        name_c: "",
+        email_c: "",
+        phone_c: "",
+        company_c: "",
+        notes_c: "",
       });
     }
     setErrors({});
