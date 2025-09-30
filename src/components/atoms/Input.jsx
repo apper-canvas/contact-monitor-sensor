@@ -6,6 +6,7 @@ const Input = forwardRef(({
   type = "text",
   error,
   value,
+  multiline,
   ...props 
 }, ref) => {
   return (
