@@ -36,12 +36,12 @@ useEffect(() => {
       loadCompanies();
     }
 
-    if (contact) {
+if (contact) {
       setFormData({
         name_c: contact.name_c || "",
         email_c: contact.email_c || "",
         phone_c: contact.phone_c || "",
-        company_c: contact.company_c || "",
+        company_c: contact.company_c?.Id || contact.company_c || "",
         notes_c: contact.notes_c || "",
       });
     } else {
