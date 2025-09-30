@@ -51,8 +51,7 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+const handleChange = (name, value) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -94,12 +93,12 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+<form onSubmit={handleSubmit} className="space-y-4">
       <FormField
         label="Name"
         name="name_c"
         value={formData.name_c}
-        onChange={handleChange}
+        onChange={(value) => handleChange('name_c', value)}
         error={errors.name_c}
         required
         placeholder="Enter user name"
@@ -110,7 +109,7 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
         name="email_c"
         type="email"
         value={formData.email_c}
-        onChange={handleChange}
+        onChange={(value) => handleChange('email_c', value)}
         error={errors.email_c}
         required
         placeholder="Enter email address"
@@ -120,7 +119,7 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
         label="Phone"
         name="phone_c"
         value={formData.phone_c}
-        onChange={handleChange}
+        onChange={(value) => handleChange('phone_c', value)}
         error={errors.phone_c}
         placeholder="Enter phone number"
       />
@@ -132,7 +131,7 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
         <select
           name="role_c"
           value={formData.role_c}
-          onChange={handleChange}
+          onChange={(e) => handleChange('role_c', e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
         >
           <option value="Admin">Admin</option>
@@ -152,7 +151,7 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
         <select
           name="status_c"
           value={formData.status_c}
-          onChange={handleChange}
+          onChange={(e) => handleChange('status_c', e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
         >
           <option value="Active">Active</option>
