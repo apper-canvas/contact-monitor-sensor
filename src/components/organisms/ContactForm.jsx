@@ -127,8 +127,15 @@ const handleSubmit = async (e) => {
     }
   };
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleFieldChange = (name, value) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
@@ -143,11 +150,11 @@ const handleSubmit = async (e) => {
       size="md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <FormField
+<FormField
           label="Name"
 name="name_c"
           value={formData.name_c}
-          onChange={handleChange}
+          onChange={(value) => handleFieldChange('name_c', value)}
           error={errors.Name_c}
           required
           placeholder="Enter full name"
@@ -158,17 +165,17 @@ name="name_c"
 name="email_c"
           type="email"
           value={formData.email_c}
-          onChange={handleChange}
+          onChange={(value) => handleFieldChange('email_c', value)}
           error={errors.email_c}
           required
           placeholder="Enter email address"
         />
 
-        <FormField
+<FormField
           label="Phone"
 name="phone_c"
           value={formData.phone_c}
-          onChange={handleChange}
+          onChange={(value) => handleFieldChange('phone_c', value)}
           error={errors.Phone_c}
           required
           placeholder="Enter phone number"
