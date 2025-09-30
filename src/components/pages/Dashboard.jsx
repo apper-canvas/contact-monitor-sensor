@@ -281,8 +281,8 @@ const recentActivitiesCount = activitiesData.filter(activity => {
                       <p className="text-sm font-semibold text-accent-600">
                         {formatCurrency(deal.value)}
                       </p>
-                      <Badge variant={getStageColor(deal.stage)} size="sm">
-                        {deal.stage.replace("-", " ")}
+<Badge variant={getStageColor(deal.stage)} size="sm">
+                        {deal.stage?.replace("-", " ") || "Unknown"}
                       </Badge>
                     </div>
                   </div>
