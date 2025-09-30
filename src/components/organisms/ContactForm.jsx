@@ -58,7 +58,7 @@ const ContactForm = ({ isOpen, onClose, contact, onSuccess }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!validateForm()) return;
@@ -69,8 +69,34 @@ const ContactForm = ({ isOpen, onClose, contact, onSuccess }) => {
         await contactService.update(contact.Id, formData);
         toast.success("Contact updated successfully!");
       } else {
-        await contactService.create(formData);
+        const newContact = await contactService.create(formData);
         toast.success("Contact created successfully!");
+        
+        // Sync with CompanyHub in background
+        try {
+          const { ApperClient } = window.ApperSDK;
+          const apperClient = new ApperClient({
+            apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+            apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+          });
+
+          const companyHubResult = await apperClient.functions.invoke(import.meta.env.VITE_CREATE_COMPANYHUB_CONTACT, {
+            body: JSON.stringify(newContact),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (companyHubResult.success) {
+            toast.success("Contact synced with CompanyHub!");
+          } else {
+            console.info(`apper_info: An error was received in this function: ${import.meta.env.VITE_CREATE_COMPANYHUB_CONTACT}. The response body is: ${JSON.stringify(companyHubResult)}.`);
+            toast.info("Contact created locally, but CompanyHub sync failed.");
+          }
+        } catch (companyHubError) {
+          console.info(`apper_info: An error was received in this function: ${import.meta.env.VITE_CREATE_COMPANYHUB_CONTACT}. The error is: ${companyHubError.message}`);
+          toast.info("Contact created locally, but CompanyHub sync failed.");
+        }
       }
       
       onSuccess();

@@ -17,7 +17,7 @@ const contactService = {
     return { ...contact };
   },
 
-  create: async (contactData) => {
+create: async (contactData) => {
     await new Promise(resolve => setTimeout(resolve, 400));
     
     const maxId = contacts.reduce((max, contact) => 
