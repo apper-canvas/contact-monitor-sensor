@@ -5,7 +5,7 @@ import FormField from "@/components/molecules/FormField";
 import Modal from "@/components/molecules/Modal";
 import taskService from "@/services/api/taskService";
 import contactService from "@/services/api/contactService";
-import { dealService } from "@/services/api/dealService";
+import dealService from "@/services/api/dealService";
 
 const TaskForm = ({ isOpen, onClose, task, onSuccess }) => {
   const [formData, setFormData] = useState({
