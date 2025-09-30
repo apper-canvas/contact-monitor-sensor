@@ -11,12 +11,14 @@ export const companyService = {
   async getAll() {
     try {
       const params = {
-        fields: [
-{"field": {"Name": "Id"}},
+fields: [
+          {"field": {"Name": "Id"}},
           {"field": {"Name": "name_c"}},
           {"field": {"Name": "industry_c"}},
           {"field": {"Name": "website_c"}},
           {"field": {"Name": "phone_c"}},
+          {"field": {"Name": "email_c"}},
+          {"field": {"Name": "description_c"}},
           {"field": {"Name": "address_c"}},
           {"field": {"Name": "city_c"}},
           {"field": {"Name": "state_c"}},
@@ -43,12 +45,14 @@ export const companyService = {
   async getById(id) {
     try {
       const params = {
-        fields: [
+fields: [
           {"field": {"Name": "Id"}},
-{"field": {"Name": "name_c"}},
+          {"field": {"Name": "name_c"}},
           {"field": {"Name": "industry_c"}},
           {"field": {"Name": "website_c"}},
           {"field": {"Name": "phone_c"}},
+          {"field": {"Name": "email_c"}},
+          {"field": {"Name": "description_c"}},
           {"field": {"Name": "address_c"}},
           {"field": {"Name": "city_c"}},
           {"field": {"Name": "state_c"}},
@@ -78,12 +82,13 @@ const updateableData = {
         industry_c: companyData.industry_c || "",
         website_c: companyData.website_c || "",
         phone_c: companyData.phone_c || "",
+        email_c: companyData.email_c || "",
+        description_c: companyData.description_c || "",
         address_c: companyData.address_c || "",
         city_c: companyData.city_c || "",
         state_c: companyData.state_c || "",
         zip_code_c: companyData.zip_code_c || ""
       };
-
       // Remove empty string fields except for name_c which is required
       const cleanData = {};
       Object.keys(updateableData).forEach(key => {
@@ -137,12 +142,14 @@ const updateableData = {
   async update(id, companyData) {
     try {
       // Only include Updateable fields for update operation
-      const updateableData = {
+const updateableData = {
         Id: parseInt(id),
-name_c: companyData.name_c || "",
+        name_c: companyData.name_c || "",
         industry_c: companyData.industry_c || "",
         website_c: companyData.website_c || "",
         phone_c: companyData.phone_c || "",
+        email_c: companyData.email_c || "",
+        description_c: companyData.description_c || "",
         address_c: companyData.address_c || "",
         city_c: companyData.city_c || "",
         state_c: companyData.state_c || "",
