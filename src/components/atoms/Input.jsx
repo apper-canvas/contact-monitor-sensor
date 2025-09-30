@@ -5,12 +5,13 @@ const Input = forwardRef(({
   className, 
   type = "text",
   error,
-  value,
+value,
   multiline,
-  ...props 
+  onChange,
+  ...props
 }, ref) => {
   return (
-    <input
+<input
       type={type}
       value={value ?? ""}
       className={cn(
@@ -18,6 +19,11 @@ const Input = forwardRef(({
         error && "border-error-500 focus:ring-error-500",
         className
       )}
+      onChange={(e) => {
+        if (onChange) {
+          onChange(e.target.value);
+        }
+      }}
       ref={ref}
       {...props}
     />

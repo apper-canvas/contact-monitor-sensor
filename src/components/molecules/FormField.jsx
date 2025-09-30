@@ -9,6 +9,7 @@ const FormField = ({
   required,
   className,
   children,
+  onChange,
   ...props 
 }) => {
   return (
@@ -18,7 +19,7 @@ const FormField = ({
           {label}
         </Label>
       )}
-      {children || <Input error={error} {...props} />}
+{children || <Input error={error} onChange={onChange} {...props} />}
       {error && (
         <p className="text-sm text-error-500">{error}</p>
       )}
