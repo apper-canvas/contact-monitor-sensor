@@ -13,9 +13,9 @@ import Contacts from "@/components/pages/Contacts";
 import Companies from "@/components/pages/Companies";
 import Deals from "@/components/pages/Deals";
 import Tasks from "@/components/pages/Tasks";
+import Users from "@/components/pages/Users";
 import Header from "@/components/organisms/Header";
 import Sidebar from "@/components/organisms/Sidebar";
-
 // Create auth context
 export const AuthContext = createContext(null);
 
@@ -157,12 +157,13 @@ function App() {
           
           <main className="flex-1 p-4 lg:p-6">
 <Routes>
-              <Route path="/" element={<Dashboard />} />
+<Route path="/" element={<Dashboard />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/deals" element={<Deals />} />
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/activities" element={<Activities />} />
+              <Route path="/users" element={<Users />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/callback" element={<Callback />} />
