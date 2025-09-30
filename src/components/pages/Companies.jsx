@@ -144,9 +144,10 @@ name_c: "",
       <FormField
         label="Company Name"
         required
-        value={formData.Name}
+value={formData.Name}
         onChange={(value) => handleFormChange("Name", value)}
         placeholder="Enter company name"
+        required
       />
       
       <FormField
