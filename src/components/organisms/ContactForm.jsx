@@ -4,7 +4,7 @@ import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
 import Modal from "@/components/molecules/Modal";
 import contactService from "@/services/api/contactService";
-
+import { companyService } from "@/services/api/companyService";
 const ContactForm = ({ isOpen, onClose, contact, onSuccess }) => {
 const [formData, setFormData] = useState({
     name_c: "",
@@ -15,10 +15,29 @@ const [formData, setFormData] = useState({
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [companies, setCompanies] = useState([]);
+  const [companiesLoading, setCompaniesLoading] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
+    const loadCompanies = async () => {
+      setCompaniesLoading(true);
+      try {
+        const companiesData = await companyService.getAll();
+        setCompanies(companiesData);
+      } catch (error) {
+        console.error("Error loading companies:", error);
+        toast.error("Failed to load companies");
+      } finally {
+        setCompaniesLoading(false);
+      }
+    };
+
+    if (isOpen) {
+      loadCompanies();
+    }
+
     if (contact) {
-setFormData({
+      setFormData({
         name_c: contact.name_c || "",
         email_c: contact.email_c || "",
         phone_c: contact.phone_c || "",
@@ -26,7 +45,7 @@ setFormData({
         notes_c: contact.notes_c || "",
       });
     } else {
-setFormData({
+      setFormData({
         name_c: "",
         email_c: "",
         phone_c: "",
@@ -155,14 +174,29 @@ name="phone_c"
           placeholder="Enter phone number"
         />
 
-        <FormField
+<FormField
           label="Company"
-name="company_c"
-          value={formData.company_c}
-          onChange={handleChange}
-          error={errors.Company_c}
-          placeholder="Enter company name"
-        />
+          error={errors.company_c}
+        >
+          <select
+            name="company_c"
+            value={formData.company_c}
+            onChange={handleChange}
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+              errors.company_c ? 'border-error-500' : 'border-gray-300'
+            } ${companiesLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={companiesLoading}
+          >
+            <option value="">
+              {companiesLoading ? "Loading companies..." : "Select a company"}
+            </option>
+            {companies.map((company) => (
+              <option key={company.Id} value={company.Id}>
+                {company.Name || company.name_c || `Company ${company.Id}`}
+              </option>
+            ))}
+          </select>
+        </FormField>
 
         <FormField
           label="Notes"
