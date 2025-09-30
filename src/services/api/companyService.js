@@ -148,14 +148,14 @@ const updateableData = {
         zip_code_c: companyData.zip_code_c || ""
       };
 
-      // Remove empty string fields except for name_c which is required
+      // Include all updateable fields to satisfy RLS policies
+      // Only exclude fields that are explicitly null or undefined
       const cleanData = { Id: parseInt(id) };
       Object.keys(updateableData).forEach(key => {
         if (key === 'Id') return; // Already added
-        if (key === 'name_c') {
-          // Always include name_c even if empty (required field)
-          cleanData[key] = updateableData[key];
-        } else if (updateableData[key] && updateableData[key].trim() !== '') {
+        // Include field if it exists in the input data (even empty strings)
+        // This ensures RLS-required fields are always present
+        if (companyData[key] !== null && companyData[key] !== undefined) {
           cleanData[key] = updateableData[key];
         }
       });
