@@ -10,11 +10,11 @@ const contactService = {
       const params = {
         fields: [
           {"field": {"Name": "Id"}},
-          {"field": {"Name": "Name_c"}},
-          {"field": {"Name": "Email_c"}},
-          {"field": {"Name": "Phone_c"}},
-          {"field": {"Name": "Company_c"}},
-          {"field": {"Name": "Notes_c"}},
+{"field": {"Name": "name_c"}},
+          {"field": {"Name": "email_c"}},
+          {"field": {"Name": "phone_c"}},
+          {"field": {"Name": "company_c"}},
+          {"field": {"Name": "notes_c"}},
           {"field": {"Name": "CreatedDate"}}
         ],
         orderBy: [{"fieldName": "CreatedDate", "sorttype": "DESC"}],
@@ -46,11 +46,11 @@ const contactService = {
       const params = {
         fields: [
           {"field": {"Name": "Id"}},
-          {"field": {"Name": "Name_c"}},
-          {"field": {"Name": "Email_c"}},
-          {"field": {"Name": "Phone_c"}},
-          {"field": {"Name": "Company_c"}},
-          {"field": {"Name": "Notes_c"}},
+{"field": {"Name": "name_c"}},
+          {"field": {"Name": "email_c"}},
+          {"field": {"Name": "phone_c"}},
+          {"field": {"Name": "company_c"}},
+          {"field": {"Name": "notes_c"}},
           {"field": {"Name": "CreatedDate"}}
         ]
       };
@@ -80,11 +80,11 @@ const contactService = {
       // Only include Updateable fields
       const params = {
         records: [{
-          Name_c: contactData.Name_c,
-          Email_c: contactData.Email_c,
-          Phone_c: contactData.Phone_c,
-          Company_c: contactData.Company_c,
-          Notes_c: contactData.Notes_c
+name_c: contactData.name_c,
+          email_c: contactData.email_c,
+          phone_c: contactData.phone_c,
+          company_c: contactData.company_c,
+          notes_c: contactData.notes_c
         }]
       };
 
@@ -126,11 +126,11 @@ const contactService = {
       const params = {
         records: [{
           Id: parseInt(id),
-          Name_c: contactData.Name_c,
-          Email_c: contactData.Email_c,
-          Phone_c: contactData.Phone_c,
-          Company_c: contactData.Company_c,
-          Notes_c: contactData.Notes_c
+name_c: contactData.name_c,
+          email_c: contactData.email_c,
+          phone_c: contactData.phone_c,
+          company_c: contactData.company_c,
+          notes_c: contactData.notes_c
         }]
       };
 

@@ -1,6 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { format, isValid } from "date-fns";
+import { Card, CardContent } from "@/components/atoms/Card";
+import ContactForm from "@/components/organisms/ContactForm";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Avatar from "@/components/atoms/Avatar";
+import Badge from "@/components/atoms/Badge";
+import SearchBar from "@/components/molecules/SearchBar";
+import Error from "@/components/ui/Error";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
+import contactService from "@/services/api/contactService";
 
 // Safe date formatting utility
 const safeFormat = (date, formatStr) => {
@@ -8,17 +19,6 @@ const safeFormat = (date, formatStr) => {
   const dateObj = new Date(date);
   return isValid(dateObj) ? format(dateObj, formatStr) : 'Invalid date';
 };
-import { Card, CardContent } from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import Avatar from "@/components/atoms/Avatar";
-import SearchBar from "@/components/molecules/SearchBar";
-import ApperIcon from "@/components/ApperIcon";
-import ContactForm from "./ContactForm";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
-import contactService from "@/services/api/contactService";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -35,10 +35,10 @@ const ContactList = () => {
 
   useEffect(() => {
 if (searchTerm) {
-      const filtered = contacts.filter(contact =>
-        contact.Name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.Email_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (contact.Company_c && contact.Company_c.toLowerCase().includes(searchTerm.toLowerCase()))
+const filtered = contacts.filter(contact =>
+        contact.name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.email_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (contact.company_c && contact.company_c.toLowerCase().includes(searchTerm.toLowerCase()))
       );
       setFilteredContacts(filtered);
     } else {
@@ -131,15 +131,15 @@ if (searchTerm) {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
 <Avatar 
-                      fallback={contact.Name_c}
+fallback={contact.name_c}
                       size="md"
                     />
                     <div>
                       <h3 className="font-semibold text-secondary-900 group-hover:text-primary-600 transition-colors">
-                        {contact.Name_c}
+{contact.name_c}
                       </h3>
-                      {contact.Company_c && (
-                        <p className="text-sm text-secondary-500">{contact.Company_c}</p>
+{contact.company_c && (
+                        <p className="text-sm text-secondary-500">{contact.company_c}</p>
                       )}
                     </div>
                   </div>
@@ -162,19 +162,19 @@ if (searchTerm) {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-<div className="flex items-center text-sm text-secondary-600">
+<div className="space-y-2">
+                  <div className="flex items-center text-sm text-secondary-600">
                     <ApperIcon name="Mail" className="w-4 h-4 mr-2 text-secondary-400" />
-                    <span className="truncate">{contact.Email_c}</span>
+                    <span className="truncate">{contact.email_c}</span>
                   </div>
                   <div className="flex items-center text-sm text-secondary-600">
                     <ApperIcon name="Phone" className="w-4 h-4 mr-2 text-secondary-400" />
-                    <span>{contact.Phone_c}</span>
+                    <span className="truncate">{contact.phone_c}</span>
                   </div>
-                  {contact.Notes_c && (
+                  {contact.notes_c && (
                     <div className="flex items-start text-sm text-secondary-600 mt-3">
                       <ApperIcon name="FileText" className="w-4 h-4 mr-2 text-secondary-400 mt-0.5" />
-                      <span className="line-clamp-2">{contact.Notes_c}</span>
+                      <span className="line-clamp-2">{contact.notes_c}</span>
                     </div>
                   )}
                 </div>

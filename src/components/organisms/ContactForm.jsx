@@ -7,11 +7,11 @@ import contactService from "@/services/api/contactService";
 
 const ContactForm = ({ isOpen, onClose, contact, onSuccess }) => {
 const [formData, setFormData] = useState({
-    Name_c: "",
-    Email_c: "",
-    Phone_c: "",
-    Company_c: "",
-    Notes_c: "",
+    name_c: "",
+    email_c: "",
+    phone_c: "",
+    company_c: "",
+    notes_c: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,11 +19,11 @@ const [formData, setFormData] = useState({
   useEffect(() => {
     if (contact) {
 setFormData({
-        Name_c: contact.Name_c || "",
-        Email_c: contact.Email_c || "",
-        Phone_c: contact.Phone_c || "",
-        Company_c: contact.Company_c || "",
-        Notes_c: contact.Notes_c || "",
+        name_c: contact.name_c || "",
+        email_c: contact.email_c || "",
+        phone_c: contact.phone_c || "",
+        company_c: contact.company_c || "",
+        notes_c: contact.notes_c || "",
       });
     } else {
       setFormData({
@@ -40,18 +40,18 @@ setFormData({
   const validateForm = () => {
     const newErrors = {};
 
-if (!formData.Name_c.trim()) {
-      newErrors.Name_c = "Name is required";
+if (!formData.name_c.trim()) {
+      newErrors.name_c = "Name is required";
     }
 
-    if (!formData.Email_c.trim()) {
-      newErrors.Email_c = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.Email_c)) {
-      newErrors.Email_c = "Email is invalid";
+    if (!formData.email_c.trim()) {
+      newErrors.email_c = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Email is invalid";
     }
 
-    if (!formData.Phone_c.trim()) {
-      newErrors.Phone_c = "Phone is required";
+    if (!formData.phone_c.trim()) {
+      newErrors.phone_c = "Phone is required";
     }
 
     setErrors(newErrors);
@@ -126,8 +126,8 @@ const handleSubmit = async (e) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <FormField
           label="Name"
-name="Name_c"
-          value={formData.Name_c}
+name="name_c"
+          value={formData.name_c}
           onChange={handleChange}
           error={errors.Name_c}
           required
@@ -136,7 +136,7 @@ name="Name_c"
 
         <FormField
           label="Email"
-          name="Email_c"
+name="email_c"
           type="email"
           value={formData.Email_c}
           onChange={handleChange}
@@ -147,8 +147,8 @@ name="Name_c"
 
         <FormField
           label="Phone"
-          name="Phone_c"
-          value={formData.Phone_c}
+name="phone_c"
+          value={formData.phone_c}
           onChange={handleChange}
           error={errors.Phone_c}
           required
@@ -157,8 +157,8 @@ name="Name_c"
 
         <FormField
           label="Company"
-          name="Company_c"
-          value={formData.Company_c}
+name="company_c"
+          value={formData.company_c}
           onChange={handleChange}
           error={errors.Company_c}
           placeholder="Enter company name"
@@ -166,15 +166,15 @@ name="Name_c"
 
         <FormField
           label="Notes"
-          name="Notes_c"
-          value={formData.Notes_c}
+name="notes_c"
+          value={formData.notes_c}
           onChange={handleChange}
           error={errors.Notes_c}
           placeholder="Additional notes..."
         >
           <textarea
-            name="Notes_c"
-            value={formData.Notes_c}
+name="notes_c"
+            value={formData.notes_c}
             onChange={handleChange}
             className="flex min-h-[80px] w-full rounded-lg border border-secondary-300 bg-white px-3 py-2 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 resize-none"
             placeholder="Additional notes..."
