@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { format, subDays } from "date-fns";
+import { format, subDays, isValid } from "date-fns";
+
+// Safe date formatting utility
+const safeFormat = (date, formatStr) => {
+  if (!date) return 'Invalid date';
+  const dateObj = new Date(date);
+  return isValid(dateObj) ? format(dateObj, formatStr) : 'Invalid date';
+};
+
+const safeDateObj = (date) => {
+  if (!date) return null;
+  const dateObj = new Date(date);
+  return isValid(dateObj) ? dateObj : null;
+};
 import StatCard from "@/components/molecules/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
@@ -46,8 +59,10 @@ const Dashboard = () => {
       
       // Calculate stats
       const totalValue = dealsData.reduce((sum, deal) => sum + deal.value, 0);
-      const recentActivitiesCount = activitiesData.filter(activity => 
-        new Date(activity.timestamp) > subDays(new Date(), 7)
+const recentActivitiesCount = activitiesData.filter(activity => {
+        const activityDate = safeDateObj(activity.timestamp);
+        return activityDate && activityDate > subDays(new Date(), 7);
+      }
       ).length;
 
       setStats({
@@ -60,19 +75,40 @@ const Dashboard = () => {
       // Get recent data
       setRecentContacts(
         contactsData
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+.sort((a, b) => {
+            const dateA = safeDateObj(b.createdAt);
+            const dateB = safeDateObj(a.createdAt);
+            if (!dateA && !dateB) return 0;
+            if (!dateA) return 1;
+            if (!dateB) return -1;
+            return dateA - dateB;
+          })
           .slice(0, 5)
       );
       
       setRecentDeals(
         dealsData
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+.sort((a, b) => {
+            const dateA = safeDateObj(b.createdAt);
+            const dateB = safeDateObj(a.createdAt);
+            if (!dateA && !dateB) return 0;
+            if (!dateA) return 1;
+            if (!dateB) return -1;
+            return dateA - dateB;
+          })
           .slice(0, 5)
       );
       
       setRecentActivities(
         activitiesData
-          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+.sort((a, b) => {
+            const dateA = safeDateObj(b.timestamp);
+            const dateB = safeDateObj(a.timestamp);
+            if (!dateA && !dateB) return 0;
+            if (!dateA) return 1;
+            if (!dateB) return -1;
+            return dateA - dateB;
+          })
           .slice(0, 5)
       );
 
@@ -200,8 +236,8 @@ const Dashboard = () => {
                         {contact.company || contact.email}
                       </p>
                     </div>
-                    <div className="text-xs text-secondary-400">
-                      {format(new Date(contact.createdAt), "MMM dd")}
+<div className="text-xs text-secondary-400">
+                      {safeFormat(contact.createdAt, "MMM dd")}
                     </div>
                   </div>
                 ))
@@ -289,8 +325,8 @@ const Dashboard = () => {
                       <p className="text-sm text-secondary-900">
                         {activity.description}
                       </p>
-                      <p className="text-xs text-secondary-500">
-                        {getContactName(activity.contactId)} • {format(new Date(activity.timestamp), "MMM dd, h:mm a")}
+<p className="text-xs text-secondary-500">
+                        {getContactName(activity.contactId)} • {safeFormat(activity.timestamp, "MMM dd, h:mm a")}
                       </p>
                     </div>
                   </div>

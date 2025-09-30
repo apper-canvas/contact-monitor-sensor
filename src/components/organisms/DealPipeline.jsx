@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
+
+// Safe date formatting utility
+const safeFormat = (date, formatStr) => {
+  if (!date) return 'No date';
+  const dateObj = new Date(date);
+  return isValid(dateObj) ? format(dateObj, formatStr) : 'Invalid date';
+};
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
@@ -235,7 +242,7 @@ const getDealsByStage = (stage) => {
                           
                           <div className="flex items-center text-xs text-secondary-500 mt-2">
                             <ApperIcon name="Calendar" className="w-3 h-3 mr-1" />
-                            Close: {format(new Date(deal.ExpectedCloseDate_c), "MMM dd")}
+Close: {safeFormat(deal.ExpectedCloseDate_c, "MMM dd")}
                           </div>
                         </motion.div>
                       ))

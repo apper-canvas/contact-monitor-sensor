@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { format, isToday, isYesterday } from "date-fns";
+import { format, isToday, isYesterday, isValid } from "date-fns";
+
+// Safe date formatting utilities
+const safeFormat = (date, formatStr) => {
+  if (!date) return 'Invalid date';
+  const dateObj = new Date(date);
+  return isValid(dateObj) ? format(dateObj, formatStr) : 'Invalid date';
+};
+
+const safeDateObj = (date) => {
+  if (!date) return null;
+  const dateObj = new Date(date);
+  return isValid(dateObj) ? dateObj : null;
+};
 import { Card, CardContent } from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
 import Avatar from "@/components/atoms/Avatar";
@@ -82,7 +95,8 @@ const getContactName = (contactId) => {
   };
 
   const formatDate = (date) => {
-    const activityDate = new Date(date);
+const activityDate = safeDateObj(date);
+    if (!activityDate) return 'Invalid date';
     if (isToday(activityDate)) {
       return "Today";
     } else if (isYesterday(activityDate)) {
@@ -92,12 +106,16 @@ const getContactName = (contactId) => {
     }
   };
 
-  const formatTime = (date) => {
+const formatTime = (date) => {
+    return safeFormat(date, "h:mm a");
+  };
+  
+  const safeFormatTime = (date) => {
     return format(new Date(date), "h:mm a");
   };
 
 const groupedActivities = activities.reduce((groups, activity) => {
-    const dateKey = formatDate(activity.Timestamp_c);
+const dateKey = formatDate(activity.Timestamp_c);
     if (!groups[dateKey]) {
       groups[dateKey] = [];
     }
@@ -153,7 +171,14 @@ const groupedActivities = activities.reduce((groups, activity) => {
               </h3>
               <div className="space-y-4">
                 {dayActivities
-.sort((a, b) => new Date(b.Timestamp_c) - new Date(a.Timestamp_c))
+.sort((a, b) => {
+  const dateA = safeDateObj(b.Timestamp_c);
+  const dateB = safeDateObj(a.Timestamp_c);
+  if (!dateA && !dateB) return 0;
+  if (!dateA) return 1;
+  if (!dateB) return -1;
+  return dateA - dateB;
+})
                   .map((activity) => (
                     <Card key={activity.Id} className="hover:shadow-md transition-shadow">
                       <CardContent className="p-4">

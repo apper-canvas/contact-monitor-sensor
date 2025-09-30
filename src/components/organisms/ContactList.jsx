@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
+
+// Safe date formatting utility
+const safeFormat = (date, formatStr) => {
+  if (!date) return 'No date';
+  const dateObj = new Date(date);
+  return isValid(dateObj) ? format(dateObj, formatStr) : 'Invalid date';
+};
 import { Card, CardContent } from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
@@ -174,7 +181,7 @@ if (searchTerm) {
 
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-100">
                   <Badge variant="default" size="sm">
-                    Added {format(new Date(contact.CreatedDate), "MMM dd")}
+Added {safeFormat(contact.CreatedDate, "MMM dd")}
                   </Badge>
                   <div className="flex items-center space-x-2">
                     <button className="text-secondary-400 hover:text-primary-500 transition-colors">
