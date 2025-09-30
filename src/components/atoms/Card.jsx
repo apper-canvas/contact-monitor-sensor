@@ -36,5 +36,10 @@ Card.displayName = "Card";
 CardHeader.displayName = "CardHeader";
 CardTitle.displayName = "CardTitle";
 CardContent.displayName = "CardContent";
+Card.displayName = "Card";
+CardHeader.displayName = "CardHeader";
+CardTitle.displayName = "CardTitle";
+CardContent.displayName = "CardContent";
 
 export { Card, CardHeader, CardTitle, CardContent };
+export default Card;
